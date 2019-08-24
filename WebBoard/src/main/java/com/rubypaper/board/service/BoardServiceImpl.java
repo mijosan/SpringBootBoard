@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.rubypaper.board.domain.Board;
 import com.rubypaper.board.persistence.BoardRepository;
 
-@Service("basicService")
+@Service("BasicBoardService")
 public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
