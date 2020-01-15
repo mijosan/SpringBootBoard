@@ -1,9 +1,13 @@
 package com.rubypaper.board.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{//WebSecurityConfigurerAdapter 클래스를 상속한 객체가 빈으로 등록되기만해도 로그인강제 X
@@ -22,7 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{//WebSecurityCo
 		security.csrf().disable();
 		security.formLogin().loginPage("/system/login").defaultSuccessUrl("/board/getBoardList", true); //로그인화면 제공
 		security.exceptionHandling().accessDeniedPage("/system/accessDenied"); //에러 화면대신 다른페이지(system/accessDenied) 보여주기
-		security.logout().logoutUrl("/System/logout").invalidateHttpSession(true).logoutSuccessUrl("/"); //세션종료
+		security.logout().logoutUrl("/system/logout").invalidateHttpSession(true).logoutSuccessUrl("/"); //세션종료
 		
+		
+	}
+	//패스워드 인코더 빈 등록
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 }
